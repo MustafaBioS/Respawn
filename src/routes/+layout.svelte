@@ -7,14 +7,13 @@
 
 <div class="scanlines"></div>
 <div class="flicker"></div>
-<div class="hsCon fixed m-10 z-50">
-	<h1 class="text-white">Highscore: 999</h1>
-</div>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 {@render children()}
 
 <style>
+
+
     .scanlines {
         position: fixed;
         inset: 0;
