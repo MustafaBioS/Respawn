@@ -7,7 +7,7 @@
 		const lenis = new Lenis({
 			autoRaf: true,
 		});
-	});
+	}); // Smooth Scrolling
 
 	let started = $state(false)
 
@@ -131,13 +131,36 @@
 			window.removeEventListener('resize', renderIcons);
 			if (el) el.innerHTML = "";
 		};
-	});
+	})  // Background Controller Icons
 
 		let openFaqIndex = $state(-1);
 
 	function toggleFAQ(index) {
 		openFaqIndex = openFaqIndex === index ? -1 : index;
 	}
+
+	let box;
+	let overlay;
+	let close;
+	let btn;
+
+	onMount(() => {
+		function handleDocClick(e) {
+			if (!box) return;
+			if (!box.contains(e.target) && !btn.contains(e.target) || close.contains(e.target)) {
+				box.style.display = 'none';
+				overlay.style.display = 'none';
+			}
+		}
+
+		document.addEventListener('click', handleDocClick);
+		return () => document.removeEventListener('click', handleDocClick);
+	});
+
+	function openFAQ() {
+		box.style.display = 'flex';
+		overlay.style.display = 'block';
+	};
 
 </script>
 
@@ -147,14 +170,14 @@
 	<img src="/Images/flag-orpheus-left.png" class="w-48 flag" alt="Hackclub Flag">
 </button>
 
-<div class="overlay h-screen w-full bg-black opacity-70 fixed z-99"></div>
+<div bind:this={overlay} class="hidden overlay h-screen w-full bg-black opacity-70 fixed z-99"></div>
 
 <div class="absolute flex items-center justify-center h-screen w-full">
-	<div class="faq flex flex-col h-165 w-165 rounded-xl bg-[#1e1452] border-[#100933] border-5 z-100">
+	<div bind:this={box} class="hidden faq flex-col h-165 w-165 rounded-xl bg-[#1e1452] border-[#100933] border-5 z-100">
 
 		<div class="top flex flex-row items-start justify-between w-full">
-			<h1 class="text-[1.1rem] m-9 text-white">Frequently Asked Questions</h1>
-			<button class="close text-[1.1rem] m-9 text-white">X</button>
+			<h1 class="text-3xl m-10 text-white">Frequently Asked Questions</h1>
+			<button bind:this={close} class="close text-3xl m-10 text-white">X</button>
 		</div>
 
 		<div class="questions flex flex-col items-start justify-start w-full h-full">
@@ -189,6 +212,11 @@
 					<span class='arrow'>▼</span>
 				</div>
 				<span class='hiddenDesc'>
+					<ul>
+						<li>Have open-source code on Github with commits every hour.</li><br>
+						<li>No AI usage at all.</li><br>
+						<li>Reflect the hours and work spent on the project accurately. don't commit fraud!</li>
+					</ul>
 				</span>
 			</button>
 
@@ -216,7 +244,7 @@
 			<h1 class="title font-bold text-5xl text-[#E1C418]">Respawn</h1>
 			<p class="text-white text-l w-[35%] mt-2">Make An Arcade Classic Game With Your Own Twist Added To It, Get Rewards!</p>
 			<button title="Button" onclick={RSVP} class="yellow btn w-90 bg-black border-3 border-b-9 h-16 border-[#E1C418] text-white mt-7 cursor-pointer">RSVP</button>
-			<button title="Button" class="blue btn w-90 bg-black border-3 border-b-9 mt-3 h-16 border-[#06aecc] text-white cursor-pointer">FAQ</button>
+			<button title="Button" bind:this={btn} onclick={openFAQ} class="blue btn w-90 bg-black border-3 border-b-9 mt-3 h-16 border-[#06aecc] text-white cursor-pointer">FAQ</button>
 			<button title="Button" onclick={hackClub} class="purple btn w-90 bg-black border-3 mt-3 border-b-9 h-16 border-[#bf5fff] text-white cursor-pointer">Exit</button>
 		</div>
 
@@ -256,21 +284,20 @@
 	}
 
 	.close:hover {
-		opacity: 0.60;
+		opacity: 0.6;
 		cursor: pointer;
 	}
 
 	.faq {
-		font-family: "Press Start 2P", system-ui;
+		font-family: "Phantom Sans";
 		font-weight: 400;
 		font-style: normal;
 	}
 
   .q {
 		width: 100%;
-		font-size: 14px;
 		text-align: left;
-		padding: 27px 50px;
+		padding: 20px 50px;
 		background-color: transparent;
 		color: white;
 		position: relative;
@@ -294,13 +321,13 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		font-size: 14px;
+		font-size: 22.5px;
 		width: 100%;
 	  transition: color 0.3s ease;
   }
 
   .hiddenDesc {
-		font-size: 12px;
+		font-size: 17px;
 		opacity: 0;
 	  max-height: 0;
 	  overflow: hidden;
@@ -314,8 +341,8 @@
 
 	.q.open .hiddenDesc {
 		max-height: 10rem;
-		opacity: 0.75;
-		padding-top: 25px;
+		opacity: 0.65;
+		padding-top: 10px;
 	}
 
 	.q.open .arrow {
