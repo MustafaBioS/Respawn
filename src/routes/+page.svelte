@@ -133,6 +133,12 @@
 		};
 	});
 
+		let openFaqIndex = $state(-1);
+
+	function toggleFAQ(index) {
+		openFaqIndex = openFaqIndex === index ? -1 : index;
+	}
+
 </script>
 
 <svelte:window onclick={keyPress} ontouchstart={keyPress}></svelte:window>
@@ -140,6 +146,57 @@
 <button class="hsCon fixed mt-8 z-50" onclick={hackClubWindow}>
 	<img src="/Images/flag-orpheus-left.png" class="w-48 flag" alt="Hackclub Flag">
 </button>
+
+<div class="overlay h-screen w-full bg-black opacity-70 fixed z-99"></div>
+
+<div class="absolute flex items-center justify-center h-screen w-full">
+	<div class="faq flex flex-col h-165 w-165 rounded-xl bg-[#1e1452] border-[#100933] border-5 z-100">
+
+		<div class="top flex flex-row items-start justify-between w-full">
+			<h1 class="text-[1.1rem] m-9 text-white">Frequently Asked Questions</h1>
+			<button class="close text-[1.1rem] m-9 text-white">X</button>
+		</div>
+
+		<div class="questions flex flex-col items-start justify-start w-full h-full">
+
+			<button class='q' class:open={openFaqIndex === 0} onclick={() => toggleFAQ(0)}>
+				<div class='q-header'>
+					Who can submit?
+					<span class='arrow'>▼</span>
+				</div>
+				<span class='hiddenDesc'>Respawn is open to all Hack Clubbers. All teenagers 18 and under, anywhere in the world can participate.</span>
+			</button>
+
+			<button class='q' class:open={openFaqIndex === 1} onclick={() => toggleFAQ(1)}>
+				<div class='q-header'>
+					Can i use AI to help make my project?
+					<span class='arrow'>▼</span>
+				</div>
+				<span class='hiddenDesc'>Only up to <span class="font-extrabold">30%</span> of your project may be AI.</span>
+			</button>
+
+			<button class='q' class:open={openFaqIndex === 2} onclick={() => toggleFAQ(2)}>
+				<div class='q-header'>
+					How many projects can i make?
+					<span class='arrow'>▼</span>
+				</div>
+				<span class='hiddenDesc'>You can make as many projects as you'd like!</span>
+			</button>
+
+			<button class='q' class:open={openFaqIndex === 3} onclick={() => toggleFAQ(3)}>
+				<div class='q-header'>
+					What are the requirements for each project?
+					<span class='arrow'>▼</span>
+				</div>
+				<span class='hiddenDesc'>
+				</span>
+			</button>
+
+
+		</div>
+
+	</div>
+</div>
 
 <!--<div class="flex h-full w-full justify-end fixed select-none pointer-events-none">-->
 <!--	<div class="rounded-full w-12 h-12 bg-[#E1C418] text-white text-center text-2xl m-10 flex items-center justify-center">?</div>-->
@@ -163,34 +220,107 @@
 			<button title="Button" onclick={hackClub} class="purple btn w-90 bg-black border-3 mt-3 border-b-9 h-16 border-[#bf5fff] text-white cursor-pointer">Exit</button>
 		</div>
 
-		<div class="con flex h-screen w-full text-center items-center flex-col">
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center justify-items-center items-center h-full w-full">
-				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center z-100">
-					<h1 class="text-3xl mt-17">Build</h1>
-					<div class="flex h-[60%] w-full items-center justify-center">
-						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
-					</div>
-				</div>
-
-				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center">
-					<h1 class="text-3xl mt-17">Ship</h1>
-					<div class="flex h-[60%] w-full items-center justify-center">
-						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
-					</div>
-				</div>
-				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center md:col-span-2 lg:col-span-1 md:mx-auto">
-					<h1 class="text-3xl mt-17">Get</h1>
-					<div class="flex h-[60%] w-full items-center justify-center">
-						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
-					</div>
-				</div>
-			</div>
-		</div>
+<!--		<div class="con flex h-screen w-full text-center items-center flex-col">-->
+<!--			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center justify-items-center items-center h-full w-full">-->
+<!--				<img src="/Images/pacman.png" alt="Mario Pipe" class="absolute w-75 mb-130 mr-[47%] pac z-101">-->
+<!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center z-100">-->
+<!--					<h1 class="text-3xl mt-17">Build</h1>-->
+<!--					<div class="flex h-[60%] w-full items-center justify-center">-->
+<!--						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--				<img src="/Images/tetris.png" alt="Mario Pipe" class="absolute w-25 mb-130 ml-80 z-0 tetris">-->
+<!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center">-->
+<!--					<h1 class="text-3xl mt-17">Ship</h1>-->
+<!--					<div class="flex h-[60%] w-full items-center justify-center">-->
+<!--						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--				<img src="/Images/pipe.png" alt="Mario Pipe" class="absolute w-25 mb-150 ml-[76%] z-0">-->
+<!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center md:col-span-2 lg:col-span-1 md:mx-auto z-50">-->
+<!--					<h1 class="text-3xl mt-17">Get</h1>-->
+<!--					<div class="flex h-[60%] w-full items-center justify-center">-->
+<!--						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
 </div>
 
 <!--{/if}-->
 
 <style>
+
+	.close {
+		transition: all 0.3s ease;
+	}
+
+	.close:hover {
+		opacity: 0.60;
+		cursor: pointer;
+	}
+
+	.faq {
+		font-family: "Press Start 2P", system-ui;
+		font-weight: 400;
+		font-style: normal;
+	}
+
+  .q {
+		width: 100%;
+		font-size: 14px;
+		text-align: left;
+		padding: 27px 50px;
+		background-color: transparent;
+		color: white;
+		position: relative;
+		cursor: pointer;
+	  transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+
+  .q::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 85%;
+		height: 2px;
+		background-color: rgb(255, 255, 255);
+		transition: all 0.3s ease;
+  }
+
+  .q-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 14px;
+		width: 100%;
+	  transition: color 0.3s ease;
+  }
+
+  .hiddenDesc {
+		font-size: 12px;
+		opacity: 0;
+	  max-height: 0;
+	  overflow: hidden;
+		display: block;
+	  transition: all 0.3s ease;
+  }
+
+	.arrow {
+		transition: all 0.3s ease;
+	}
+
+	.q.open .hiddenDesc {
+		max-height: 10rem;
+		opacity: 0.75;
+		padding-top: 25px;
+	}
+
+	.q.open .arrow {
+		transform: rotate(180deg);
+	}
 
 	.landing-root {
 		position: relative;
