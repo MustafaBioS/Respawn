@@ -33,6 +33,106 @@
 		window.location.href = "https://forms.fillout.com/t/t33bRksw6dus/";
 	}
 
+	let el;
+
+	onMount(() => {
+		var iconBase = "https://icons.hackclub.com/api/icons/0xbf5fff";
+
+		function hashSeed(str) {
+			var h = 0;
+			for (var i = 0; i < str.length; i++) h = ((h << 5) - h) + str.charCodeAt(i) | 0;
+			return Math.abs(h);
+		}
+
+		function renderIcons() {
+			if (!el) return;
+			el.innerHTML = "";
+
+			var seed = hashSeed("landing-game-controller");
+			function seededRandom() {
+				seed = (seed * 9301 + 49297) % 233280;
+				return seed / 233280;
+			}
+
+			var pageHeight = document.documentElement.scrollHeight;
+			var pageWidth = document.documentElement.clientWidth;
+			var firstSectionHeight = window.innerHeight;
+			var centerMinX = pageWidth * 0.22;
+			var centerMaxX = pageWidth * 0.78;
+			var centerMinY = firstSectionHeight * 0.2;
+			var centerMaxY = firstSectionHeight * 0.85;
+			var iconsPerViewport = 10;
+			var viewportCount = Math.max(1, Math.ceil(pageHeight / window.innerHeight));
+			var n = iconsPerViewport * viewportCount;
+
+			function isInHeroCenterZone(x, y, size) {
+				var centerX = x + size / 2;
+				var centerY = y + size / 2;
+				return centerY <= firstSectionHeight &&
+					centerX >= centerMinX &&
+					centerX <= centerMaxX &&
+					centerY >= centerMinY &&
+					centerY <= centerMaxY;
+			}
+
+			for (var i = 0; i < n; i++) {
+				var size = 34 + Math.floor(seededRandom() * 22);
+				var rot = Math.floor(seededRandom() * 360);
+				var x = 0;
+				var y = 0;
+				var maxX = Math.max(0, pageWidth - size);
+				var maxY = Math.max(0, pageHeight - size);
+
+				var attempts = 0;
+				for (attempts = 0; attempts < 30; attempts++) {
+					x = seededRandom() * maxX;
+					y = seededRandom() * maxY;
+					if (!isInHeroCenterZone(x, y, size)) break;
+				}
+
+				if (attempts === 30) {
+					if (pageHeight > firstSectionHeight + size) {
+						y = firstSectionHeight + seededRandom() * Math.max(0, pageHeight - firstSectionHeight - size);
+						x = seededRandom() * maxX;
+					} else {
+						var leftMax = Math.max(0, centerMinX - size);
+						var rightMin = Math.min(maxX, centerMaxX);
+						y = seededRandom() * Math.max(0, firstSectionHeight - size);
+						if (seededRandom() < 0.5 && leftMax > 0) {
+							x = seededRandom() * leftMax;
+						} else {
+							x = rightMin + seededRandom() * Math.max(0, maxX - rightMin);
+						}
+					}
+				}
+
+				var img = document.createElement("img");
+				img.src = iconBase + "/game-controller";
+				img.alt = "";
+				img.className = "landing-star-img";
+				img.setAttribute("width", size);
+				img.setAttribute("height", size);
+				var wrap = document.createElement("div");
+				wrap.className = "landing-star";
+				wrap.style.left = x + "px";
+				wrap.style.top = y + "px";
+				wrap.style.width = size + "px";
+				wrap.style.height = size + "px";
+				wrap.style.transform = "rotate(" + rot + "deg)";
+				wrap.appendChild(img);
+				el.appendChild(wrap);
+			}
+		}
+
+		renderIcons();
+		window.addEventListener('resize', renderIcons);
+
+		return () => {
+			window.removeEventListener('resize', renderIcons);
+			if (el) el.innerHTML = "";
+		};
+	});
+
 </script>
 
 <svelte:window onclick={keyPress} ontouchstart={keyPress}></svelte:window>
@@ -53,27 +153,75 @@
 
 <!--{:else}-->
 
-	<div class="con flex h-screen w-full items-center justify-center text-center flex-col gap-5">
-		<h1 class="title font-bold text-5xl text-[#E1C418]">Respawn</h1>
-		<p class="text-white text-l w-[35%] mt-2">Make An Arcade Classic Game With Your Own Twist Added To It, Get Rewards!</p>
-		<button title="Button" onclick={RSVP} class="yellow btn w-90 bg-black border-3 border-b-9 h-16 border-[#E1C418] text-white mt-7 cursor-pointer">RSVP</button>
-		<button title="Button" class="blue btn w-90 bg-black border-3 border-b-9 mt-3 h-16 border-[#06aecc] text-white cursor-pointer">FAQ</button>
-		<button title="Button" onclick={hackClub} class="purple btn w-90 bg-black border-3 mt-3 border-b-9 h-16 border-[#bf5fff] text-white cursor-pointer">Exit</button>
-	</div>
-
-	<div class="con flex h-screen w-full text-center items-center flex-col">
-		<img src="/Images/car.png" class="car z-50 -mt-24 pt-0 w-60 absolute" alt="car">
-		<div class="road mt-0 pt-0"></div>
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center justify-items-center items-center h-full w-full">
-			<div class="h-137.5 w-96 rounded-2xl bg-white"></div>
-			<div class="h-137.5 w-96 rounded-2xl bg-white"></div>
-			<div class="h-137.5 w-96 rounded-2xl bg-white md:col-span-2 lg:col-span-1 md:mx-auto"></div>
+<div class="landing-root">
+	<div class="landing-stars-layer" bind:this={el}></div>
+		<div class="con flex h-screen w-full items-center justify-center text-center flex-col gap-5">
+			<h1 class="title font-bold text-5xl text-[#E1C418]">Respawn</h1>
+			<p class="text-white text-l w-[35%] mt-2">Make An Arcade Classic Game With Your Own Twist Added To It, Get Rewards!</p>
+			<button title="Button" onclick={RSVP} class="yellow btn w-90 bg-black border-3 border-b-9 h-16 border-[#E1C418] text-white mt-7 cursor-pointer">RSVP</button>
+			<button title="Button" class="blue btn w-90 bg-black border-3 border-b-9 mt-3 h-16 border-[#06aecc] text-white cursor-pointer">FAQ</button>
+			<button title="Button" onclick={hackClub} class="purple btn w-90 bg-black border-3 mt-3 border-b-9 h-16 border-[#bf5fff] text-white cursor-pointer">Exit</button>
 		</div>
-	</div>
+
+		<div class="con flex h-screen w-full text-center items-center flex-col">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center justify-items-center items-center h-full w-full">
+				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center z-100">
+					<h1 class="text-3xl mt-17">Build</h1>
+					<div class="flex h-[60%] w-full items-center justify-center">
+						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
+					</div>
+				</div>
+
+				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center">
+					<h1 class="text-3xl mt-17">Ship</h1>
+					<div class="flex h-[60%] w-full items-center justify-center">
+						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
+					</div>
+				</div>
+				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center md:col-span-2 lg:col-span-1 md:mx-auto">
+					<h1 class="text-3xl mt-17">Get</h1>
+					<div class="flex h-[60%] w-full items-center justify-center">
+						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
 
 <!--{/if}-->
 
 <style>
+
+	.landing-root {
+		position: relative;
+		isolation: isolate;
+	}
+
+	:global(.landing-stars-layer) {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: -2;
+	}
+
+	:global(.landing-star) {
+			position: absolute;
+			pointer-events: none;
+	}
+
+	:global(.landing-star-img) {
+		display: block;
+		opacity: 0.3;
+	}
+
+	.gi {
+			box-shadow: 0 2px 35px rgba(83, 31, 168, 0.8);
+			transition: all 0.3s ease;
+	}
+
+	.gi:hover {
+			transform: translateY(-6px);
+	}
 
 	.car {
 		animation: car-move 3s infinite;
@@ -96,17 +244,15 @@
   }
 
 	.road {
-			background-color: #2a2a2a;
+			background-color: white;
 			height: 65px;
 			width: 100%;
 			background-image:
 				repeating-linear-gradient(
 								90deg,
-								#F5C200 0px, #F5C200 30px,
+								#F5C200 10px, #32fffe 20px, #2CFE16 30px, #ED00FC 40px, #DF0000 50px, #0000E3 60px,
 								transparent 30px, transparent 60px
 			);
-			border-top: 4px solid #F5C200;
-      border-bottom: 4px solid #F5C200;
 	}
 
     .flag {
@@ -119,6 +265,8 @@
 	}
 
 	.con {
+			position: relative;
+			z-index: 2;
 			font-family: "Press Start 2P", system-ui;
 	}
 
