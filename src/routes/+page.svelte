@@ -3,6 +3,12 @@
 	import { onMount } from 'svelte';
 	import Lenis from 'lenis';
 
+	let el;
+	let box;
+	let overlay;
+	let close;
+	let btn;
+
 	onMount(() => {
 		const lenis = new Lenis({
 			autoRaf: true,
@@ -21,19 +27,9 @@
 		isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent)
 	})
 
-	function hackClubWindow() {
-		window.open("https://hackclub.com/");
-	}
-
-	function hackClub() {
-		window.location.href = "https://hackclub.com/";
-	}
-
 	function RSVP() {
 		window.location.href = "https://forms.fillout.com/t/t33bRksw6dus/";
 	}
-
-	let el;
 
 	onMount(() => {
 		var iconBase = "https://icons.hackclub.com/api/icons/0xbf5fff";
@@ -139,10 +135,7 @@
 		openFaqIndex = openFaqIndex === index ? -1 : index;
 	}
 
-	let box;
-	let overlay;
-	let close;
-	let btn;
+
 
 	onMount(() => {
 		function handleDocClick(e) {
@@ -162,18 +155,18 @@
 		overlay.style.display = 'block';
 	};
 
+	function shop() {
+		window.location.href = "/shop";
+	}
+
 </script>
 
 <svelte:window onclick={keyPress} ontouchstart={keyPress}></svelte:window>
 
-<button class="hsCon fixed mt-8 z-50" onclick={hackClubWindow}>
-	<img src="/Images/flag-orpheus-left.png" class="w-48 flag" alt="Hackclub Flag">
-</button>
-
 <div bind:this={overlay} class="hidden overlay h-screen w-full bg-black opacity-70 fixed z-99"></div>
 
 <div class="absolute flex items-center justify-center h-screen w-full">
-	<div bind:this={box} class="hidden faq flex-col h-165 w-165 rounded-xl bg-[#1e1452] border-[#100933] border-5 z-100">
+	<div bind:this={box} class="hidden faq flex-col h-165 w-165 rounded-xl bg-[#1e1452] border-[#100933] border-5 z-100 overflow-y-auto">
 
 		<div class="top flex flex-row items-start justify-between w-full">
 			<h1 class="text-3xl m-10 text-white">Frequently Asked Questions</h1>
@@ -184,29 +177,21 @@
 
 			<button class='q' class:open={openFaqIndex === 0} onclick={() => toggleFAQ(0)}>
 				<div class='q-header'>
+					What is Hack Club?
+					<span class='arrow'>▼</span>
+				</div>
+				<span class='hiddenDesc'>Hack Club is the world's biggest community of teenage makers! We're a 501(c)(3) nonprofit, supported by folks like GitHub and donors who believe in young builders. We're fully transparent and here to help you ship.</span>
+			</button>
+
+			<button class='q' class:open={openFaqIndex === 1} onclick={() => toggleFAQ(1)}>
+				<div class='q-header'>
 					Who can submit?
 					<span class='arrow'>▼</span>
 				</div>
 				<span class='hiddenDesc'>Respawn is open to all Hack Clubbers. All teenagers 18 and under, anywhere in the world can participate.</span>
 			</button>
 
-			<button class='q' class:open={openFaqIndex === 1} onclick={() => toggleFAQ(1)}>
-				<div class='q-header'>
-					Can i use AI to help make my project?
-					<span class='arrow'>▼</span>
-				</div>
-				<span class='hiddenDesc'>Only up to <span class="font-extrabold">30%</span> of your project may be AI.</span>
-			</button>
-
 			<button class='q' class:open={openFaqIndex === 2} onclick={() => toggleFAQ(2)}>
-				<div class='q-header'>
-					How many projects can i make?
-					<span class='arrow'>▼</span>
-				</div>
-				<span class='hiddenDesc'>You can make as many projects as you'd like!</span>
-			</button>
-
-			<button class='q' class:open={openFaqIndex === 3} onclick={() => toggleFAQ(3)}>
 				<div class='q-header'>
 					What are the requirements for each project?
 					<span class='arrow'>▼</span>
@@ -220,6 +205,29 @@
 				</span>
 			</button>
 
+			<button class='q' class:open={openFaqIndex === 3} onclick={() => toggleFAQ(3)}>
+				<div class='q-header'>
+					Can i use AI to help make my project?
+					<span class='arrow'>▼</span>
+				</div>
+				<span class='hiddenDesc'>Only up to <span class="font-extrabold">30%</span> of your project may be AI.</span>
+			</button>
+
+			<button class='q' class:open={openFaqIndex === 4} onclick={() => toggleFAQ(4)}>
+				<div class='q-header'>
+					How many projects can i make?
+					<span class='arrow'>▼</span>
+				</div>
+				<span class='hiddenDesc'>You can make as many projects as you'd like!</span>
+			</button>
+
+			<button class='q' class:open={openFaqIndex === 5} onclick={() => toggleFAQ(5)}>
+				<div class='q-header'>
+					What
+					<span class='arrow'>▼</span>
+				</div>
+				<span class='hiddenDesc'>You can make as many projects as you'd like!</span>
+			</button>
 
 		</div>
 
@@ -238,33 +246,28 @@
 
 <!--{:else}-->
 
-<div class="landing-root">
-	<div class="landing-stars-layer" bind:this={el}></div>
-		<div class="con flex h-screen w-full items-center justify-center text-center flex-col gap-5">
-			<h1 class="title font-bold text-5xl text-[#E1C418]">Respawn</h1>
-			<p class="text-white text-l w-[35%] mt-2">Make An Arcade Classic Game With Your Own Twist Added To It, Get Rewards!</p>
-			<button title="Button" onclick={RSVP} class="yellow btn w-90 bg-black border-3 border-b-9 h-16 border-[#E1C418] text-white mt-7 cursor-pointer">RSVP</button>
-			<button title="Button" bind:this={btn} onclick={openFAQ} class="blue btn w-90 bg-black border-3 border-b-9 mt-3 h-16 border-[#06aecc] text-white cursor-pointer">FAQ</button>
-			<button title="Button" onclick={hackClub} class="purple btn w-90 bg-black border-3 mt-3 border-b-9 h-16 border-[#bf5fff] text-white cursor-pointer">Exit</button>
-		</div>
+
+	<div class="con flex h-screen w-full items-center justify-center text-center flex-col gap-5">
+		<h1 class="title font-bold text-5xl text-[#E1C418]">Respawn</h1>
+		<p class="text-white text-l w-[35%] mt-2">Make An Arcade Classic Game With Your Own Twist Added To It, Get Rewards!</p>
+		<button title="Button" onclick={RSVP} class="yellow btn w-90 bg-black border-3 border-b-9 h-16 border-[#E1C418] text-white mt-7 cursor-pointer">RSVP</button>
+		<button title="Button" bind:this={btn} onclick={openFAQ} class="blue btn w-90 bg-black border-3 border-b-9 mt-3 h-16 border-[#06aecc] text-white cursor-pointer">FAQ</button>
+		<button title="Button" onclick={shop} class="purple btn w-90 bg-black border-3 mt-3 border-b-9 h-16 border-[#bf5fff] text-white cursor-pointer">Shop</button>
 
 <!--		<div class="con flex h-screen w-full text-center items-center flex-col">-->
 <!--			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center justify-items-center items-center h-full w-full">-->
-<!--				<img src="/Images/pacman.png" alt="Mario Pipe" class="absolute w-75 mb-130 mr-[47%] pac z-101">-->
 <!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center z-100">-->
 <!--					<h1 class="text-3xl mt-17">Build</h1>-->
 <!--					<div class="flex h-[60%] w-full items-center justify-center">-->
 <!--						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>-->
 <!--					</div>-->
 <!--				</div>-->
-<!--				<img src="/Images/tetris.png" alt="Mario Pipe" class="absolute w-25 mb-130 ml-80 z-0 tetris">-->
 <!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center">-->
 <!--					<h1 class="text-3xl mt-17">Ship</h1>-->
 <!--					<div class="flex h-[60%] w-full items-center justify-center">-->
 <!--						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>-->
 <!--					</div>-->
 <!--				</div>-->
-<!--				<img src="/Images/pipe.png" alt="Mario Pipe" class="absolute w-25 mb-150 ml-[76%] z-0">-->
 <!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center md:col-span-2 lg:col-span-1 md:mx-auto z-50">-->
 <!--					<h1 class="text-3xl mt-17">Get</h1>-->
 <!--					<div class="flex h-[60%] w-full items-center justify-center">-->
@@ -349,28 +352,6 @@
 		transform: rotate(180deg);
 	}
 
-	.landing-root {
-		position: relative;
-		isolation: isolate;
-	}
-
-	:global(.landing-stars-layer) {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		z-index: -2;
-	}
-
-	:global(.landing-star) {
-			position: absolute;
-			pointer-events: none;
-	}
-
-	:global(.landing-star-img) {
-		display: block;
-		opacity: 0.3;
-	}
-
 	.gi {
 			box-shadow: 0 2px 35px rgba(83, 31, 168, 0.8);
 			transition: all 0.3s ease;
@@ -410,15 +391,6 @@
 								#F5C200 10px, #32fffe 20px, #2CFE16 30px, #ED00FC 40px, #DF0000 50px, #0000E3 60px,
 								transparent 30px, transparent 60px
 			);
-	}
-
-    .flag {
-			transition: all 0.3s ease;
-	}
-
-	.flag:hover {
-			opacity: 0.6;
-			cursor: pointer;
 	}
 
 	.con {
