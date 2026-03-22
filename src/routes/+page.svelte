@@ -156,12 +156,13 @@
 	};
 
 	function shop() {
-		window.location.href = "/shop";
+		// window.location.href = "/shop";
+		alert("W.I.P");
 	}
 
 </script>
 
-<svelte:window onclick={keyPress} ontouchstart={keyPress}></svelte:window>
+<svelte:window onkeydown={keyPress} ontouchstart={keyPress}></svelte:window>
 
 <div bind:this={overlay} class="hidden overlay h-screen w-full bg-black opacity-70 fixed z-99"></div>
 
@@ -221,30 +222,26 @@
 				<span class='hiddenDesc'>You can make as many projects as you'd like!</span>
 			</button>
 
-			<button class='q' class:open={openFaqIndex === 5} onclick={() => toggleFAQ(5)}>
-				<div class='q-header'>
-					What
-					<span class='arrow'>▼</span>
-				</div>
-				<span class='hiddenDesc'>You can make as many projects as you'd like!</span>
-			</button>
+<!--			<button class='q' class:open={openFaqIndex === 5} onclick={() => toggleFAQ(5)}>-->
+<!--				<div class='q-header'>-->
+<!--					What-->
+<!--					<span class='arrow'>▼</span>-->
+<!--				</div>-->
+<!--				<span class='hiddenDesc'>You can make as many projects as you'd like!</span>-->
+<!--			</button>-->
 
 		</div>
 
 	</div>
 </div>
 
-<!--<div class="flex h-full w-full justify-end fixed select-none pointer-events-none">-->
-<!--	<div class="rounded-full w-12 h-12 bg-[#E1C418] text-white text-center text-2xl m-10 flex items-center justify-center">?</div>-->
-<!--</div>-->
+{#if !started}
 
-<!--{#if !started}-->
+	<div class="startup h-screen w-screen bg-black absolute flex items-center justify-center">
+		<h1 class="blink text-white text-[clamp(1rem,5vw,3.5rem)] text-center">{isMobile ? '[ TAP TO START ]' : '[ PRESS ANY KEY ]'}</h1>
+	</div>
 
-<!--	<div class="startup h-screen w-screen bg-black absolute flex items-center justify-center">-->
-<!--		<h1 class="blink text-white text-[clamp(1rem,5vw,3.5rem)] text-center">{isMobile ? '[ TAP TO START ]' : '[ PRESS ANY KEY ]'}</h1>-->
-<!--	</div>-->
-
-<!--{:else}-->
+{:else}
 
 
 	<div class="con flex h-screen w-full items-center justify-center text-center flex-col gap-5">
@@ -278,7 +275,7 @@
 <!--		</div>-->
 </div>
 
-<!--{/if}-->
+{/if}
 
 <style>
 
