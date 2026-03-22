@@ -235,47 +235,48 @@
 	</div>
 </div>
 
-{#if !started}
+<!--{#if !started}-->
 
-	<div class="startup h-screen w-screen bg-black absolute flex items-center justify-center">
-		<h1 class="blink text-white text-[clamp(1rem,5vw,3.5rem)] text-center">{isMobile ? '[ TAP TO START ]' : '[ PRESS ANY KEY ]'}</h1>
-	</div>
+<!--	<div class="startup h-screen w-screen bg-black absolute flex items-center justify-center">-->
+<!--		<h1 class="blink text-white text-[clamp(1rem,5vw,3.5rem)] text-center">{isMobile ? '[ TAP TO START ]' : '[ PRESS ANY KEY ]'}</h1>-->
+<!--	</div>-->
 
-{:else}
+<!--{:else}-->
 
 
-	<div class="con flex h-screen w-full items-center justify-center text-center flex-col gap-5">
-		<h1 class="title font-bold text-5xl text-[#E1C418]">Respawn</h1>
-		<p class="text-white text-l w-[35%] mt-2">Make An Arcade Classic Game With Your Own Twist Added To It, Get Rewards!</p>
-		<button title="Button" onclick={RSVP} class="yellow btn w-90 bg-black border-3 border-b-9 h-16 border-[#E1C418] text-white mt-7 cursor-pointer">RSVP</button>
-		<button title="Button" bind:this={btn} onclick={openFAQ} class="blue btn w-90 bg-black border-3 border-b-9 mt-3 h-16 border-[#06aecc] text-white cursor-pointer">FAQ</button>
-		<button title="Button" onclick={shop} class="purple btn w-90 bg-black border-3 mt-3 border-b-9 h-16 border-[#bf5fff] text-white cursor-pointer">Shop</button>
-
-<!--		<div class="con flex h-screen w-full text-center items-center flex-col">-->
-<!--			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center justify-items-center items-center h-full w-full">-->
-<!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center z-100">-->
-<!--					<h1 class="text-3xl mt-17">Build</h1>-->
-<!--					<div class="flex h-[60%] w-full items-center justify-center">-->
-<!--						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center">-->
-<!--					<h1 class="text-3xl mt-17">Ship</h1>-->
-<!--					<div class="flex h-[60%] w-full items-center justify-center">-->
-<!--						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--				<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center md:col-span-2 lg:col-span-1 md:mx-auto z-50">-->
-<!--					<h1 class="text-3xl mt-17">Get</h1>-->
-<!--					<div class="flex h-[60%] w-full items-center justify-center">-->
-<!--						<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
+<div class="con flex h-screen w-full items-center justify-center text-center flex-col gap-5">
+	<h1 class="title font-bold text-5xl text-[#E1C418]">Respawn</h1>
+	<p class="text-white text-l w-[35%] mt-2">Make An Arcade Classic Game With Your Own Twist Added To It, Get Rewards!</p>
+	<button title="Button" onclick={RSVP} class="yellow btn w-90 bg-black border-3 border-b-9 h-16 border-[#E1C418] text-white mt-7 cursor-pointer">RSVP</button>
+	<button title="Button" bind:this={btn} onclick={openFAQ} class="blue btn w-90 bg-black border-3 border-b-9 mt-3 h-16 border-[#06aecc] text-white cursor-pointer">FAQ</button>
+	<button title="Button" onclick={shop} class="purple btn w-90 bg-black border-3 mt-3 border-b-9 h-16 border-[#bf5fff] text-white cursor-pointer">Shop</button>
 </div>
 
-{/if}
+<div class="con flex h-screen w-full text-center items-center flex-col">
+
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center justify-items-center items-center h-full w-full">
+
+		<img src="/Images/arcade.png" class="absolute w-125 z-10" alt="Arcade" />
+		<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center z-60">
+			<h1 class="text-3xl mt-17">Build</h1>
+			<div class="flex h-[60%] w-full items-center justify-center">
+				<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
+			</div>
+		</div>
+		<div class="gi h-137.5 w-96 rounded-2xl bg-transparent flex flex-col items-center z-60">
+			<h1 class="text-3xl mt-18 mb-0">Ship</h1>
+			<p class="w-[75%] mt-10">Build an arcade classic game with your own twist added to it</p>
+		</div>
+		<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center md:col-span-2 lg:col-span-1 md:mx-auto z-50">
+			<h1 class="text-3xl mt-17">Get</h1>
+			<div class="flex h-[60%] w-full items-center justify-center">
+				<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--{/if}-->
 
 <style>
 
@@ -358,10 +359,6 @@
 			transform: translateY(-6px);
 	}
 
-	.car {
-		animation: car-move 3s infinite;
-	}
-
 	.btn {
       transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -378,27 +375,11 @@
 			100% {transform: translateY(0)}
   }
 
-	.road {
-			background-color: white;
-			height: 65px;
-			width: 100%;
-			background-image:
-				repeating-linear-gradient(
-								90deg,
-								#F5C200 10px, #32fffe 20px, #2CFE16 30px, #ED00FC 40px, #DF0000 50px, #0000E3 60px,
-								transparent 30px, transparent 60px
-			);
-	}
-
 	.con {
 			position: relative;
 			z-index: 2;
 			font-family: "Press Start 2P", system-ui;
 	}
-
-  .hs {
-      font-family: "Press Start 2P", system-ui;
-  }
 
 	.title {
       text-shadow:
