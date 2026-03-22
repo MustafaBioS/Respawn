@@ -256,16 +256,17 @@
 
 	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center justify-items-center items-center h-full w-full">
 
-		<img src="/Images/arcade.png" class="absolute w-125 z-10" alt="Arcade" />
 		<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center z-60">
 			<h1 class="text-3xl mt-17">Build</h1>
 			<div class="flex h-[60%] w-full items-center justify-center">
 				<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
 			</div>
 		</div>
-		<div class="gi h-137.5 w-96 rounded-2xl bg-transparent flex flex-col items-center z-60">
-			<h1 class="text-3xl mt-18 mb-0">Ship</h1>
-			<p class="w-[75%] mt-10">Build an arcade classic game with your own twist added to it</p>
+		<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-cener z-60">
+			<h1 class="text-3xl mt-17">Ship</h1>
+			<div class="flex h-[60%] w-full items-center justify-center">
+				<p class="w-[75%]">Build an arcade classic game with your own twist added to it</p>
+			</div>
 		</div>
 		<div class="gi h-137.5 w-96 rounded-2xl bg-white flex flex-col items-center md:col-span-2 lg:col-span-1 md:mx-auto z-50">
 			<h1 class="text-3xl mt-17">Get</h1>
@@ -365,20 +366,24 @@
 
 	.btn:hover {
 			transform: translateY(-6px);
-			box-shadow: 0 2px 25px rgba(83, 31, 168, 0.8);
 	}
-
-	@keyframes car-move {
-			0% {transform: translateY(0)}
-			50% {transform: translateY(10px)}
-			75% {transform: translateY(-10px)}
-			100% {transform: translateY(0)}
-  }
 
 	.con {
 			position: relative;
 			z-index: 2;
 			font-family: "Press Start 2P", system-ui;
+	}
+
+	.yellow:hover {
+      box-shadow: 0 2px 25px rgba(225, 196, 24, 0.8);
+	}
+
+	.blue:hover {
+			box-shadow: 0 2px 25px rgba(6, 174, 204, 0.8);
+	}
+
+	.purple:hover {
+      box-shadow: 0 2px 25px rgba(191, 95, 255, 0.8);
 	}
 
 	.title {
